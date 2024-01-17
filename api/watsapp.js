@@ -1,8 +1,8 @@
 import express from "express";
-import { whatsapp, ready} from "./funcionamiento.js";
+import { whatsapp, response} from "./funcionamiento.js";
+import qrcode from "qrcode"
 import fs from "fs"
 import cors from "cors"
-import qrcode from "qrcode"
 
 const appExpress = express();
 appExpress.use(express.json())
@@ -12,17 +12,32 @@ let sesion = false;
 
 appExpress.get("/sesion", async(req,res)=>{
     try {
-        if (!sesion) {
             whatsapp.initialize();
-
             whatsapp.on('qr', async(qr) => {
-                const urlCode = await qrcode.toDataURL(qr)
-                sesion = true
-                res.status(200).send({status:200, message:{urlCode}})
-            });  
-        }else{
-            res.status(200).send({status:200, message:"Debes primero inicializar Whatsapp"})
-        }
+                if (sesion) {
+                    console.log("ya se inicio sesion");
+                }else{
+                    
+                    const urlCode = await qrcode.toDataURL(qr)
+                    return res.status(200).send({status:200, message:{urlCode}})
+                }
+            }); 
+
+            whatsapp.on('ready', () => {
+                if (sesion) {
+                    console.log("redy");
+                    return res.status(200).send({status:200, message:"sesion Iniciada"})
+                    
+                }else{
+                    sesion = true
+                    console.log("sesion iniciada")
+                }
+              });
+
+            whatsapp.on('authenticated', () =>{
+                console.log("autenticated");
+            })
+            // res.status(dataRes.status).send(dataRes)
      } catch (error) {
          console.error("Error al generar el código QR:", error);
          res.status(500).send({status:500, message: "Error al generar el código QR." });
@@ -44,13 +59,13 @@ appExpress.get("/sesion", async(req,res)=>{
     }
  })
 
-appExpress.get("/prueba", async(req,res)=>{
-    res.status(200).send({status:200, message: ready})
+appExpress.get("/verify", async(req,res)=>{
+    res.status(200).send({status:200, message:sesion})
  })
 
 appExpress.post("/message", async(req,res)=>{
     try {
-        if (ready) {
+        if (sesion) {
             const { numero, mensaje } = req.body;
             const tel = numero;
             const chatId = tel.substring(1) + "@c.us";

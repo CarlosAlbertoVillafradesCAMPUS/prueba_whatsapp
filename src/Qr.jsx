@@ -7,7 +7,7 @@ function Qr({urlQR, setShowForm, setShow}) {
             headers: new Headers({"Content-Type": "application/json"}),
           }
           try {
-            const response = await (await fetch(`http://127.17.0.98:5017/prueba`, options)).json();
+            const response = await (await fetch(`http://127.17.0.98:5017/verify`, options)).json();
             if(response.status === 200){
                 if (response.message) {
                     setShow(false)
@@ -28,7 +28,7 @@ function Qr({urlQR, setShowForm, setShow}) {
               urlQR ?(
                 <div className='w-100'>
                     <div className='w-100 d-flex justify-center'>
-                        <button onClick={handleSHowForm} className='btn-danger fs-1 text-center font-bold' type='button'>X</button>
+                        <button onClick={handleSHowForm} className='btn btn-primary fs-1 text-center font-bold' type='button'>X</button>
                     </div>
                     <div className='w-100 d-flex justify-center'>
                         <img src={urlQR} />
