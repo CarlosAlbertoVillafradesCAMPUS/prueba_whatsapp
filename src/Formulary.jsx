@@ -1,16 +1,16 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function Formulary({setShowMen, setInfo}) {
+function Formulary({setShowMen,setInfo}) {
     const [numero, setNumero] = useState("")
     const [mensaje, setMensaje] = useState("")
 
     async function submit(){
-        setShowMen(true)
         setInfo({})
+        setShowMen(true)
         const datForm = {
             numero: "+573238884307",
-            mensaje: "Hola Felipe, recibimos tu solicitud para visitar Campuslands y sus instalaciones 🤩🚀, estaremos encantados de recibirte; te esperamos el 8/02/2024, no olvides traer tu documento original.🤩🚀"
+            mensaje: "Hola Carlos, recibimos tu solicitud para visitar Campuslands y sus instalaciones 🤩🚀, estaremos encantados de recibirte; te esperamos el 12/02/2024, no olvides traer tu documento original.🤩🚀"
         }
         let options = {
             method: "POST",
@@ -59,9 +59,9 @@ function Formulary({setShowMen, setInfo}) {
       <td>Campuslands</td>
       <td>8/02/2024</td>
       <td>
-      <Link to="https://wa.me/573238884307?v=2&text=Hola Felipe, recibimos tu solicitud para visitar Campuslands y sus instalaciones 🤩🚀, estaremos encantados de recibirte; te esperamos el 8/02/2024, no olvides traer tu documento original.🤩🚀">
+      <a href="https://api.whatsapp.com/send?phone=573238884307&text=Hola%20Felipe,%20recibimos%20tu%20solicitud%20para%20visitar%20Campuslands%20y%20sus%20instalaciones%20%F0%9F%A4%A9%F0%9F%9A%80,%20estaremos%20encantados%20de%20recibirte;%20te%20esperamos%20el%208%2F02%2F2024,%20no%20olvides%20traer%20tu%20documento%20original.%F0%9F%A4%A9%F0%9F%9A%80" target="_blank">
         <button className='btn btn-success'>Aceptar</button>
-      </Link>
+    </a>
       </td>
     </tr>
   </tbody>

@@ -6,7 +6,6 @@ import "./style.css"
 function App() {
   const [url, setUrl] = useState({})
   const [show, setShow] = useState(false)
-  const [showForm, setShowForm] = useState(false)
   const [showMen, setShowMen] = useState(false)
   const [info, setInfo] = useState({})
 
@@ -49,11 +48,7 @@ function App() {
               )
             )
           }
-          {
-            showForm && (
-              <Formulary setShowMen={setShowMen} setInfo={setInfo} />
-            )
-          }
+            <Formulary setShowMen={setShowMen} setInfo={setInfo} />
           {
             showMen && (
               info.message ? (
