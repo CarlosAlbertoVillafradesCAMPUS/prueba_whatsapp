@@ -17,7 +17,6 @@ appExpress.get("/sesion", async(req,res)=>{
                 if (sesion) {
                     console.log("ya se inicio sesion");
                 }else{
-                    
                     const urlCode = await qrcode.toDataURL(qr)
                     return res.status(200).send({status:200, message:{urlCode}})
                 }

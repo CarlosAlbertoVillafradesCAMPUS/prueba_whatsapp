@@ -13,6 +13,7 @@ const whatsapp = new Client({
 
 whatsapp.on('auth_failure', msg => {
     console.log("Error de autenticación:", msg);
+    whatsapp.initialize()
 });
 
 whatsapp.on('disconnected', reason => {

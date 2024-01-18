@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-function Qr({urlQR, setShowForm, setShow}) {
+function Qr({urlQR, setShow}) {
     const handleSHowForm = async()=>{
         let options = {
             method: "GET",
@@ -11,7 +11,6 @@ function Qr({urlQR, setShowForm, setShow}) {
             if(response.status === 200){
                 if (response.message) {
                     setShow(false)
-                    setShowForm(true)  
                 }else{
                     setShow(false)
                 }
@@ -25,17 +24,17 @@ function Qr({urlQR, setShowForm, setShow}) {
   return (
     <>
      {
-              urlQR ?(
+              (urlQR.message.urlCode) ?(
                 <div className='w-100'>
                     <div className='w-100 d-flex justify-center'>
                         <button onClick={handleSHowForm} className='btn btn-primary fs-1 text-center font-bold' type='button'>X</button>
                     </div>
                     <div className='w-100 d-flex justify-center'>
-                        <img src={urlQR} />
+                    <img src={urlQR.message.urlCode} />
                     </div>
                 </div>
                 ):(
-                  <p>No se a podido Gnerar qr</p>
+                  <p>{urlQR.message}</p>
                 )
             }
     </>

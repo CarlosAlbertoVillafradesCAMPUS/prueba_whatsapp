@@ -6,10 +6,12 @@ import "./style.css"
 function App() {
   const [url, setUrl] = useState({})
   const [show, setShow] = useState(false)
+  const [showBtn, setShowBtn] = useState(true)
   const [showMen, setShowMen] = useState(false)
   const [info, setInfo] = useState({})
 
   async function generateQR() {
+    setUrl({})
     setShow(true)
     let options = {
       method: "GET",
@@ -19,6 +21,7 @@ function App() {
       const responseQR = await (await fetch(`http://127.17.0.98:5017/sesion`, options)).json();
       if (responseQR.status == 200) {
         setUrl(responseQR)
+        setShowBtn(false)
       }
 
       else {
@@ -36,13 +39,17 @@ function App() {
           <div>
             <h1>Generar codigo QR para whatsapp</h1>
           </div>
-          <div className="d-flex justify-content-center mt-3">
+          { 
+          showBtn &&(
+            <div className="d-flex justify-content-center mt-3">
             <button onClick={() => generateQR()} type="button" className="btn btn-primary">Generate QR</button>
           </div>
+          )
+          }
           {
             show && (
               url.message ? (
-                <Qr setShowForm={setShowForm} setShow={setShow} urlQR={url.message.urlCode || false} />
+                <Qr setShow={setShow} urlQR={url} />
               ) : (
                 <p>Generando Codigo QR...</p>
               )
